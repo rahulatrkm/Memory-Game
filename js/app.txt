@@ -37,55 +37,51 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 let t = 0
-let temp, temp1, temp2;
-
+let temp, temp1, temp2 = 0;
 
 let clickHandler = function (event) {
-    let card = event.target;
-    const oneCardOpen = card.classList.contains('open');
-    const won = document.getElementsByClassName('.match');
-    if (won.length < 16) {
-        if (!oneCardOpen) {
-            if (t === 0) {
-                temp2 = card;
-                temp = card.firstChild.nextSibling.className;
-                displayOne(card);
-            } else {
-                temp1 = card.firstChild.nextSibling.className;
-                if (temp === temp1) {
-                    displayTwo(card, temp2);
-                }
-                else {
-                    hideOne(temp2);
-                    card.addEventListener('click', clickHandler, false);
-                }
-            }
-        }
+    let first = event.target;
+    if (temp2) {
+        console.log(temp2);
+        console.log(first);
     }
-    else {
-        // to be done 
+    
+    if (t === 0) {
+        temp2 = first;
+        temp = first.firstChild.nextSibling.className;
+        displayOne(first);
+    } else {
+        temp1 = first.firstChild.nextSibling.className;
+        if (temp === temp1) {
+            displayTwo(first, temp2);
+        }
+        else {
+            hideOne(temp2);
+        }
     }
 }
 
-const deck = document.querySelector(".deck");
-deck.addEventListener('click', clickHandler, false);
-
+const card = document.querySelector(".deck");
+card.addEventListener('click', clickHandler, false);
 
 function displayOne(first) {
     first.classList.add("open");
     first.classList.add("show");
+    first.removeEventListener('click', clickHandler);
     t = 1;
 }
 
 function hideOne(first) {
     first.classList.remove("open");
     first.classList.remove("show");
+    first.addEventListener('click', clickHandler);
     t = 0
 }
 
 function displayTwo(first, second) {
     first.classList.remove("open");
     first.classList.remove("show");
+    first.removeEventListener('click', clickHandler);
     first.classList.add("match");
     second.classList.add("match");
     t = 0;
