@@ -79,17 +79,6 @@ var hideOne = function(event) {
     const first = event.target;
     temp2.classList.remove("open");
     temp2.classList.remove("show");
-    $(first).addClass("wrong");
-    $(temp2).addClass("wrong")
-    //first.classList.add("wrong");
-    temp2.classList.add("wrong");
-    //first.classList.add('animated');
-    //temp2.classList.add('animated');
-    //first.classList.add('shake');
-    //temp2.classList.add('shake');
-    //temp2.addEventListener('webkitAnimationEnd', removeRed);
-    first.classList.remove("wrong");
-    temp2.classList.remove("wrong");
     t = 0
 }
 
@@ -105,8 +94,6 @@ function displayTwo(event) {
     const first = event.target;
     first.classList.remove("open");
     first.classList.remove("show");
-    first.classList.add('rubberBand');
-    temp2.classList.add('rubberBand');
     first.classList.add("match");
     temp2.classList.add("match");
     matched += 2;
