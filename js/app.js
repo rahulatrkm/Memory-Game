@@ -38,55 +38,83 @@ function shuffle(array) {
  */
 let t = 0
 let temp, temp1, temp2;
-
+let matched = 0;
 
 let clickHandler = function (event) {
     let card = event.target;
     const oneCardOpen = card.classList.contains('open');
-    const won = document.getElementsByClassName('.match');
-    if (won.length < 16) {
-        if (!oneCardOpen) {
-            if (t === 0) {
-                temp2 = card;
-                temp = card.firstChild.nextSibling.className;
-                displayOne(card);
-            } else {
-                temp1 = card.firstChild.nextSibling.className;
-                if (temp === temp1) {
-                    displayTwo(card, temp2);
-                }
-                else {
-                    hideOne(temp2);
-                    card.addEventListener('click', clickHandler, false);
-                }
+
+    if ((!oneCardOpen) && card.classList.contains('card')) {
+        card.classList.add('flipOutY');
+        if (t === 0) {
+            temp2 = card;
+            temp = card.firstChild.nextSibling.className;
+            card.addEventListener('webkitAnimationEnd', displayOne);
+        } else {
+            temp1 = card.firstChild.nextSibling.className;
+            if (temp === temp1) {
+                card.addEventListener('webkitAnimationEnd', displayTwo);
+            }
+            else {
+                card.addEventListener('webkitAnimationEnd', hideOne);
+                card.addEventListener('click', clickHandler, false);
             }
         }
     }
-    else {
-        // to be done 
-    }
 }
 
+
 const deck = document.querySelector(".deck");
+const container = document.querySelector(".container");
 deck.addEventListener('click', clickHandler, false);
 
-
-function displayOne(first) {
+var displayOne = function(event) {
+    const first = event.target;
     first.classList.add("open");
     first.classList.add("show");
     t = 1;
 }
 
-function hideOne(first) {
-    first.classList.remove("open");
-    first.classList.remove("show");
+var hideOne = function(event) {
+    const first = event.target;
+    temp2.classList.remove("open");
+    temp2.classList.remove("show");
+    $(first).addClass("wrong");
+    $(temp2).addClass("wrong")
+    //first.classList.add("wrong");
+    temp2.classList.add("wrong");
+    //first.classList.add('animated');
+    //temp2.classList.add('animated');
+    //first.classList.add('shake');
+    //temp2.classList.add('shake');
+    //temp2.addEventListener('webkitAnimationEnd', removeRed);
+    first.classList.remove("wrong");
+    temp2.classList.remove("wrong");
     t = 0
 }
 
-function displayTwo(first, second) {
+/*var removeRed = function(event){
+    const first = event.target;
+    first.classList.add('flipInY');
+    temp2.classList.add('flipInY');
+    first.classList.remove("wrong");
+    temp2.classList.remove("wrong");
+}*/
+
+function displayTwo(event) {
+    const first = event.target;
     first.classList.remove("open");
     first.classList.remove("show");
+    first.classList.add('rubberBand');
+    temp2.classList.add('rubberBand');
     first.classList.add("match");
-    second.classList.add("match");
+    temp2.classList.add("match");
+    matched += 2;
     t = 0;
+    if (matched === 16) {
+        var element = document.getElementsByClassName("deck");
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    }
 }

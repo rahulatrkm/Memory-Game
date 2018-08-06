@@ -21,6 +21,32 @@ body {
     font-family: 'Coda', cursive;
 }
 
+/*
+*
+* Adding the tick sign
+*
+
+svg {
+    width: 100px;
+    display: block;
+    margin: 40px auto 0;
+}
+
+.path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+}
+.circle {
+        -webkit-animation: dash .9s ease-in-out;
+        animation: dash .9s ease-in-out;
+}
+.check {
+        stroke-dashoffset: -100;
+        -webkit-animation: dash-check .9s .35s ease-in-out forwards;
+        animation: dash-check .9s .35s ease-in-out forwards;
+}
+*/
+
 .container {
     display: flex;
     justify-content: center;
@@ -78,6 +104,12 @@ h1 {
 .deck .card.match {
     cursor: default;
     background: #02ccba;
+    font-size: 33px;
+}
+
+.deck .card.wrong {
+    cursor: default;
+    background: red;
     font-size: 33px;
 }
 
