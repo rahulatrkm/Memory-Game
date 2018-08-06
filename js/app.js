@@ -42,9 +42,9 @@ let matched = 0;
 
 let clickHandler = function (event) {
     let card = event.target;
-    const oneCardOpen = card.classList.contains('open');
+    //const oneCardOpen = card.classList.contains('open');
 
-    if ((!oneCardOpen) && card.classList.contains('card')) {
+    if (card.classList.contains('card')) {
         card.classList.add('flipOutY');
         if (t === 0) {
             temp2 = card;
@@ -56,7 +56,7 @@ let clickHandler = function (event) {
                 card.addEventListener('webkitAnimationEnd', displayTwo);
             }
             else {
-                card.addEventListener('webkitAnimationEnd', hideOne);
+                hideOne(temp2);
                 card.addEventListener('click', clickHandler, false);
             }
         }
@@ -75,8 +75,7 @@ var displayOne = function(event) {
     t = 1;
 }
 
-var hideOne = function(event) {
-    const first = event.target;
+var hideOne = function(temp2) {
     temp2.classList.remove("open");
     temp2.classList.remove("show");
     t = 0
