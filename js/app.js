@@ -49,12 +49,13 @@ let matched = 0;
 
 let clickHandler = function (event) {
     let card = event.target;
-    //const oneCardOpen = card.classList.contains('open');
+    const oneCardOpen = card.classList.contains('open');
     
     if ((!oneCardOpen) && card.classList.contains('card')) {
         if (t === 0) {
             temp2 = card;
             temp = card.firstChild.nextSibling.className;
+            card.addEventListener('webkitAnimationEnd', displayOne);
         } else {
             temp1 = card.firstChild.nextSibling.className;
             if (temp === temp1) {
@@ -85,14 +86,6 @@ var hideOne = function(temp2) {
     temp2.classList.remove("show");
     t = 0
 }
-
-/*var removeRed = function(event){
-    const first = event.target;
-    first.classList.add('flipInY');
-    temp2.classList.add('flipInY');
-    first.classList.remove("wrong");
-    temp2.classList.remove("wrong");
-}*/
 
 function displayTwo(event) {
     const first = event.target;
