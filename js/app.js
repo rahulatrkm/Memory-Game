@@ -1,14 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
+let cardList = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-anchor', 'fa-leaf', 'fa-bicycle', 'fa-diamond', 'fa-bomb', 'fa-bolt', 'fa-bicycle', 'fa-paper-plane-o', 'fa-cube', 'fa-leaf', 'fa-bomb'];
+//console.log(shuffle(cardList));
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -25,6 +19,19 @@ function shuffle(array) {
     return array;
 }
 
+/*
+ * Display the cards on the page
+ *   - shuffle the list of cards using the provided "shuffle" method above
+ *   - loop through each card and create its HTML
+ *   - add each card's HTML to the page
+ */
+
+let shuffled = shuffle(cardList);
+shuffled.forEach(icon => {
+    $('ul.deck').append(`<li class="card">
+                <i class="fa ${icon}"></i>
+            </li>`);
+});
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -43,13 +50,11 @@ let matched = 0;
 let clickHandler = function (event) {
     let card = event.target;
     //const oneCardOpen = card.classList.contains('open');
-
-    if (card.classList.contains('card')) {
-        card.classList.add('flipOutY');
+    
+    if ((!oneCardOpen) && card.classList.contains('card')) {
         if (t === 0) {
             temp2 = card;
             temp = card.firstChild.nextSibling.className;
-            card.addEventListener('webkitAnimationEnd', displayOne);
         } else {
             temp1 = card.firstChild.nextSibling.className;
             if (temp === temp1) {
