@@ -47,19 +47,19 @@ let t = 0
 let temp, temp1, temp2;
 let matched = 0;
 
+// click handler for what happens after clicking the card
 let clickHandler = function (event) {
     let card = event.target;
     const oneCardOpen = card.classList.contains('open');
-    
     if ((!oneCardOpen) && card.classList.contains('card')) {
         if (t === 0) {
             temp2 = card;
             temp = card.firstChild.nextSibling.className;
-            card.addEventListener('webkitAnimationEnd', displayOne);
+            displayOne(card);
         } else {
             temp1 = card.firstChild.nextSibling.className;
             if (temp === temp1) {
-                card.addEventListener('webkitAnimationEnd', displayTwo);
+                displayTwo(card);
             }
             else {
                 hideOne(temp2);
@@ -74,23 +74,22 @@ const deck = document.querySelector(".deck");
 const container = document.querySelector(".container");
 deck.addEventListener('click', clickHandler, false);
 
-var displayOne = function(event) {
-    const first = event.target;
-    first.classList.add("open");
-    first.classList.add("show");
+// function for displaying 
+function displayOne(first) {
+    $(first).addClass("open show");
     t = 1;
 }
 
+// function for hiding the first card if there is no match
 var hideOne = function(temp2) {
-    temp2.classList.remove("open");
-    temp2.classList.remove("show");
+    $(temp2).removeClass("open show");
     t = 0
 }
 
-function displayTwo(event) {
-    const first = event.target;
-    first.classList.remove("open");
-    first.classList.remove("show");
+
+// function for displaying the matched cards
+function displayTwo(first) {
+    $(temp2).removeClass("open show");
     first.classList.add("match");
     temp2.classList.add("match");
     matched += 2;
