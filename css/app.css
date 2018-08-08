@@ -21,32 +21,6 @@ body {
     font-family: 'Coda', cursive;
 }
 
-/*
-*
-* Adding the tick sign
-*
-
-svg {
-    width: 100px;
-    display: block;
-    margin: 40px auto 0;
-}
-
-.path {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 0;
-}
-.circle {
-        -webkit-animation: dash .9s ease-in-out;
-        animation: dash .9s ease-in-out;
-}
-.check {
-        stroke-dashoffset: -100;
-        -webkit-animation: dash-check .9s .35s ease-in-out forwards;
-        animation: dash-check .9s .35s ease-in-out forwards;
-}
-*/
-
 .container {
     display: flex;
     justify-content: center;
@@ -59,6 +33,33 @@ h1 {
     font-weight: 300;
 }
 
+/*
+*
+* Adding the tick sign
+*/
+
+svg {
+    width: 100px;
+    display: block;
+    margin: 40px auto 0;
+}
+/*
+.path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+}
+
+.circle {
+    -webkit-animation: dash .9s ease-in-out;
+    animation: dash .9s ease-in-out;
+}
+
+.check {
+    stroke-dashoffset: -100;
+    -webkit-animation: dash-check .9s .35s ease-in-out forwards;
+    animation: dash-check .9s .35s ease-in-out forwards;
+}
+*/
 /*
  * Styles for the deck of cards
  */
@@ -138,4 +139,13 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/*
+* for the won class
+*/
+.won {
+    text-align: center;
+    flex-wrap: wrap;
+
 }
