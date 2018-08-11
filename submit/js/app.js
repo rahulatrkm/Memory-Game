@@ -1,7 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-let cardList = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-anchor', 'fa-leaf', 'fa-bicycle', 'fa-diamond', 'fa-bomb', 'fa-bolt', 'fa-bicycle', 'fa-paper-plane-o', 'fa-cube', 'fa-leaf', 'fa-bomb'];
+let cardList = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bomb', 'fa-leaf', 'fa-bicycle'];
+cardList = cardList.concat(cardList);
 //console.log(shuffle(cardList));
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -15,7 +16,6 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
@@ -53,12 +53,15 @@ let move = 1;
 
 // click handler for what happens after clicking the card
 let clickHandler = function (event) {
-    document.querySelector('.moves').textContent = move;
     let card = event.target;
     const oneCardOpen = card.classList.contains('open');
     const matchedCard = card.classList.contains('match');
     if ((!oneCardOpen) && card.classList.contains('card') && (!matchedCard)) {
+        // starting the time
+        startTimer();
+        document.querySelector('.moves').textContent = move;
         if (t === 0) {
+            console.log(t);
             temp2 = card;
             temp = card.firstChild.nextSibling.className;
             displayOne(card);
@@ -68,8 +71,11 @@ let clickHandler = function (event) {
                 displayTwo(card);
             }
             else {
-                hideOne(temp2);
+                console.log(t);
+                hideOne(card);
                 card.addEventListener('click', clickHandler, false);
+                $(temp2).removeClass("open show");
+                $(card).removeClass("open show");
             }
         }
     }
@@ -77,35 +83,44 @@ let clickHandler = function (event) {
 
 // function for displaying 
 function displayOne(first) {
+    console.log("inside displayOne");
     $(first).addClass("open show");
     move += 1;
     t = 1;
 }
 
 // function for hiding the first card if there is no match
-var hideOne = function(temp2) {
-    $(temp2).removeClass("open show");
+function hideOne(first) {
+    console.log("inside hideOne");
     // getting all the stars
     let star = $('.fa-star');
     // removing the star if incorrect guess
     $(star[star.length - 1]).toggleClass('fa-star fa-star-o');
+    $(temp2).addClass("wrong");
+    $(first).addClass("wrong");
+    setTimeout(function() {
+        $(temp2).removeClass("wrong");
+        $(first).removeClass("wrong");
+        t = 0;
+    }, 500);
+    console.log("wrong Class should be removed");
     move += 1;
-    t = 0
 }
 
 // function for restarting the game
-var restarting = function () {
-    move = 0;
-    matched = 0;
-    t = 0;
-    temp = null;
-    temp1 = null;
-    temp2 = null;
-    $('.match').removeClass('match');
-    $('.open').removeClass('open show');
-    $('.fa-star-o').toggleClass('fa-star-o fa-star');
-    // shuffling yet to be implemented
-    shuffled = shuffle(cardList);
+// Playagain part
+var playAgain = function () {
+    location.reload();
+}
+
+// added the timer
+let timer;
+let startTimeCount = 1;
+function startTimer() {
+    if (startTimeCount) {
+        timer = setInterval(updateTime, 1000);
+        startTimeCount = 0;
+    }
 }
 
 // function for displaying the matched cards
@@ -126,49 +141,32 @@ function displayTwo(first) {
             <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10"
                 points="100.2,40.2 51.5,88.8 29.8,67.5 " />
         </svg>
-        <p><b>Congratulations! You Won!</b></p><p>With ${move} Moves and ${stars} Stars</p><p>Woooooo!<p>
+        <p><b>Congratulations! You Won!</b></p>
+        <p>With ${move} Moves and ${stars} Stars</p>
+        <p>Time taken: ${hr}:${min}:${sec}</p>
+        <p>Woooooo!<p>
         <button class = 'btn btn-info playAgain'>Play again!</button>`);
         $('.playAgain').on("click", playAgain);
+        clearInterval(timer);
     }
 }
 
 const deck = document.querySelector(".deck");
 const container = document.querySelector(".container");
 deck.addEventListener('click', clickHandler, false);
-const restartButton = document.querySelector('.restart');
-restartButton.addEventListener('click', restarting);
+const restartButton = document.querySelector('.fa-repeat');
+restartButton.addEventListener('click', playAgain);
+let sec = 0, min = 0, hr = 0;
 
-var playAgain = function () {
-    $(".won").empty();
-    $(".container").append(`
-        <header>
-            <h1>Matching Game</h1>
-        </header>
-
-        <section class="score-panel">
-            <ul class="stars">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-            </ul>
-
-            <span class="moves"></span> Moves
-
-            <div class="restart">
-                <i class="fa fa-repeat"></i>
-            </div>
-        </section>
-
-        <ul class="deck">
-        </ul>
-        `);
-    shuffled = shuffle(cardList);
-    shuffled.forEach(icon => {
-        $('ul.deck').append(`<li class="card">
-                    <i class="fa ${icon}"></i>
-                </li>`);
-    });
-    document.querySelector(".deck").addEventListener('click', clickHandler, false);
-    document.querySelector('.restart').addEventListener('click', restarting);
-    document.querySelector('.restart').click();
+var updateTime = function(){
+    sec++;
+    if (sec > 59) {
+        sec = 0;
+        min++;
+    }
+    if (min > 59) {
+        min = 0;
+        hr++;
+    }
+    document.querySelector(".timeTaken").textContent = hr + ":" + min + ":" + sec;
 }
