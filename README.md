@@ -15,6 +15,22 @@ For specific, detailed instructions, look at the project instructions in the [Ud
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+This repository is copied from starter code for _all_ Udacity students. Further changes are made to implement the functionality of the game.
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## Dependencies
+
+To make this game functional following libraries and functionalities are used:
+jQuery  (for accessing the elements and tags and adding event to it)
+DOM manipulation (for accessing the nodes and making the game functional)
+Bootstrap 4 (for making the styling of the page easy and fast)
+animate.css (for making the game more interactive and entertaining)
+
+## How to play?
+
+- After loading the game, when you click on a card the game starts
+- In this game, player is expected to click on the card and find its matching card
+- Stars are provided on the basis of number of moves made by the player on each incorrect guess
+- The game ends when all the cards are matched
+- Player can also reset the game
+- After winning the game Player can also play again the game by pressing the play again button
+- Enjoy the game!!
