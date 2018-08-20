@@ -7,6 +7,7 @@ cardList = cardList.concat(cardList);
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
+    'use strict'; // turn on Strict Mode
     var currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
